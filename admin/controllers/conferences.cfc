@@ -26,6 +26,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var configurationService	= getBeanFactory().getBean("configurationService") />
 		<cfset configurationService.verifyBaseConfiguration( rc.siteID ) />
 
+		<cfset var conferenceService	= getBeanFactory().getBean("conferenceService") />
+		<cfset rc.getConferences		= conferenceService.getConferences(siteid = rc.siteID) />
+
 		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('conferences'),"?action=conferences" )>
 
 

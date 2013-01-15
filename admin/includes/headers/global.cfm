@@ -18,6 +18,7 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
+<!--- some js and css for the header --->
 <cfsilent>
 <cfsavecontent variable="local.str">
 <cfoutput><link rel="stylesheet" href="#rc.$.globalConfig().getContext()#/plugins/#rc.pluginConfig.getDirectory()#/admin/assets/css/admin.css" type="text/css" media="all" />

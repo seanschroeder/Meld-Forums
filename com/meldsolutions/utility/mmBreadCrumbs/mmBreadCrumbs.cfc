@@ -51,11 +51,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
         <cfsavecontent variable="str"><cfoutput>
 			<cfloop from="1" to="#ArrayLen(crumbArray)#" index="iiX">
 			<cfif iiX neq ArrayLen(crumbArray) and len( crumbArray[iiX].getURL() )>
-				<a href="#crumbArray[iiX].getURL()#">#crumbArray[iiX].getLabel()#</a> <span class="delim">&raquo;</span>
+				<li><a href="#crumbArray[iiX].getURL()#">#crumbArray[iiX].getLabel()#</a> <span class="divider">&raquo;</span></li>
 			<cfelseif iiX neq ArrayLen(crumbArray)>
-				#crumbArray[iiX].getLabel()# <span class="delim">&raquo;</span>
+				<li>#crumbArray[iiX].getLabel()# <span class="divider">&raquo;</span></li>
 			<cfelse>
-				<span class="current">#crumbArray[iiX].getLabel()#</span>
+				<li class="active">#crumbArray[iiX].getLabel()#</li>
 			</cfif>
 			</cfloop></cfoutput>
 		</cfsavecontent>

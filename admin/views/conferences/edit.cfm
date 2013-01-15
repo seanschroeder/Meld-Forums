@@ -1,10 +1,4 @@
-<cfsilent>
-	
-	<!--- rc --->
-	<!--- headers --->
-	<cfinclude template="/#rc.pluginConfig.getPackage()#/admin/includes/headers/jquery-ui-tabs.cfm">
-	<cfinclude template="/#rc.pluginConfig.getPackage()#/admin/includes/headers/jquery-ui.cfm">
-</cfsilent><cfoutput>
+<cfoutput>
 <!--- global menu --->
 <!--- begin content --->
 <div id="meld-body">
