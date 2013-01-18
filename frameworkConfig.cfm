@@ -18,13 +18,13 @@ along with this program; if not, write to the Free Software
 Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 --->
-<cfset framework = StructNew() />
-<cfset framework.applicationKey="MeldForums">
-<cfset framework.base="/MeldForums">
-<cfset framework.usingsubsystems=true>
-<cfset framework.defaultSubsystem="admin">
-<cfset framework.action="action">
-<cfset framework.home="main.default">
-<cfset framework.reload="reload">
-<cfset framework.generateSES=false>
-<cfset framework.reloadApplicationOnEveryRequest=false>
+<cfset framework 									= structNew() />
+<cfset framework.applicationKey						= "MeldForums" />
+<cfset framework.base 								= "/MeldForums" />
+<cfset framework.usingsubsystems					= true />
+<cfset framework.defaultSubsystem 					= "admin" />
+<cfset framework.action 							= "action" />
+<cfset framework.home 								= "main.default" />
+<cfset framework.reload 							= "reload" />
+<cfset framework.generateSES 						= false />
+<cfset framework.reloadApplicationOnEveryRequest	= (env eq 'dev'?true:false) />

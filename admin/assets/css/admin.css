@@ -1,10 +1,14 @@
-/*
-<!---
-||PACKAGENAMELICENSE||
---->
-*/
-@import "muraOverrides.css";
-@import "global.css";
-@import "nav.css";
-@import "form.css";
-@import "plugin.css";
+
+
+
+/* make a pointer on clickable cells */
+table.clickable tbody td[href]:hover {
+  cursor: pointer;
+}
+
+/* right align any number values */
+th.meld-number,
+td.meld-number {
+  text-align: right;
+}
+

@@ -31,7 +31,6 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('conferences'),"?action=conferences" )>
 
-
 	</cffunction>
 
 	<cffunction name="edit" access="public" returntype="void" output="false">
@@ -53,24 +52,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfif isDefined("rc.btaction")>
 			<!--- cancel? --->
 			<cfif arguments.rc.btaction eq 'cancel'>
-				<cflocation url="?action=conferences" addtoken="false">
+				<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
 			<!--- save? --->
 			<cfelseif rc.btaction eq 'save'>
 				<cfset success = actionSaveConference( arguments.rc )>
 				<cfif success eq true>
-					<cflocation url="?action=conferences" addtoken="false">
+					<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
 				</cfif> 
 			<!--- update? --->
 			<cfelseif rc.btaction eq 'update'>
 				<cfset success = actionUpdateConference( arguments.rc )>
 				<cfif success eq true>
-					<cflocation url="?action=conferences" addtoken="false">
+					<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
 				</cfif>
 			</cfif>
 		<cfelseif isDefined("rc.btdeleteconfirm") and rc.btdeleteconfirm eq "delete">
 			<cfset success = actionDeleteConference( arguments.rc )>
 			<cfif success eq true>
-				<cflocation url="?action=conferences" addtoken="false">
+				<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
 			</cfif> 
 		</cfif>
 

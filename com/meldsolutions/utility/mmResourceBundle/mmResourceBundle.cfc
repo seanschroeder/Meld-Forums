@@ -45,9 +45,9 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	</cffunction>
 
 	<cffunction name="key" access="public" returntype="string" output="false">
-		<cfargument name="value" type="string" required="true" />
-		<cfargument name="context" type="string" required="false" default="label" />
-		<cfargument name="locale" type="string" required="false" default="#getBaseRBLocale()#" />
+		<cfargument name="value" 	type="string" required="true" />
+		<cfargument name="context" 	type="string" required="false" default="label" />
+		<cfargument name="locale" 	type="string" required="false" default="#getBaseRBLocale()#" />
 
 		<cfset var fullKey		= getApplicationKey() />
 		<cfset var keyValue		= "" />
@@ -63,13 +63,42 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset fullKey = fullKey & "." & arguments.value />
 		</cfif>
 		
-		<cfset keyValue = getRBFactory().getKeyValue(arguments.locale,fullKey) /> 
+		<cfset keyValue = getRBFactory().getKeyValue(arguments.locale,fullKey) />
 									
 		<cfif keyValue eq "#fullKey#_missing" and getBaseRBLocale() eq "en" and not getHasCustom()>
 			<cfreturn appendKey( fullKey,arguments.value,arguments.locale,true,true ) />
 		</cfif>
 
 		<cfreturn keyValue />
+	</cffunction>
+
+	<cffunction name="keyExists" access="public" returntype="boolean" output="false">
+		<cfargument name="value" 	type="string" required="true" />
+		<cfargument name="context" 	type="string" required="false" default="label" />
+		<cfargument name="locale" 	type="string" required="false" default="#getBaseRBLocale()#" />
+
+		<cfset var fullKey		= getApplicationKey() />
+		<cfset var keyValue		= "" />
+		
+		<cfif not getRBValid()>
+			<cfreturn arguments.value & "_z" />
+		</cfif>
+
+		<cfif arguments.context eq "mura">
+			<cfset fullKey = arguments.value />
+		<cfelse>
+			<cfset fullKey = fullKey & "." & arguments.context />
+			<cfset fullKey = fullKey & "." & arguments.value />
+		</cfif>
+		
+		<cfset keyValue = getRBFactory().getKeyValue(arguments.locale,fullKey) />
+		<!--- 
+		<cfdump var="#arguments#" />
+				<cfoutput>#fullkey#|#keyvalue#</cfoutput>
+				<cfabort /> --->
+		
+
+		<cfreturn !(keyValue eq "#fullKey#_missing" and getBaseRBLocale() eq "en" and not getHasCustom()) />
 	</cffunction>
 
 	<cffunction name="getKey" access="public" returntype="string" output="false">

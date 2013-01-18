@@ -340,6 +340,11 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 
 	<cffunction name="getFrameworkVariables" output="false">
 		<cfset var framework = StructNew() />
+		<!--- todo: refactor this to a central location? --->
+		<cfset var env = 'prod' />
+		<cfif listLast(CGI.SERVER_NAME, '.') eq 'local'>
+			<cfset env = 'dev' />
+		</cfif>
 
 		<cfinclude template="frameworkConfig.cfm" />
 
