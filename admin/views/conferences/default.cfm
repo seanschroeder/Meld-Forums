@@ -1,9 +1,3 @@
-<!--- 
-<cfsilent>
-	<!--- rc --->
-	<!--- headers --->
-	<cfinclude template="headers/jquery-datatable-conference.cfm">
-</cfsilent> --->
 <cfimport prefix="ui" taglib="../../ui" />
 <cfoutput>
 

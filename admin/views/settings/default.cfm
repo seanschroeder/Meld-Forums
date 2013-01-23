@@ -1,10 +1,4 @@
-<cfsilent>
-	
-	<!--- rc --->
-	<!--- headers --->
-	<cfoutput>
-	</cfoutput>
-</cfsilent><cfoutput>
+<cfoutput>
 <!--- global menu --->
 <!--- begin content --->
 		<div id="meld-actions" class="section clearfix">

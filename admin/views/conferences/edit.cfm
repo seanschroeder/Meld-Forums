@@ -1,5 +1,4 @@
-<cfimport prefix="ui" taglib="/MeldForums/admin/ui" />
-
+<cfimport prefix="ui" taglib="../../ui" />
 <cfoutput>
 
 <!--- update --->

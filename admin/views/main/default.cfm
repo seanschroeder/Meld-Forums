@@ -1,10 +1,4 @@
-<cfsilent>
-	<!--- headers --->
-	<cfoutput>
-	</cfoutput>
-</cfsilent><cfoutput>
-<!--- global menu --->
-<!--- begin content --->
+<cfoutput>
 <br />
 <div id="meld-body">
 	<!-- CONTENT HERE -->

@@ -1,6 +1,4 @@
 <cfoutput>
-<!--- global menu --->
-<!--- begin content --->
 <div id="meld-body">
 	<!-- CONTENT HERE -->
 	<form id="meld-edit-form" class="meld-form" method="post" action="index.cfm">
