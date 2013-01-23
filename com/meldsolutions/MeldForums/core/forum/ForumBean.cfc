@@ -388,6 +388,10 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="getThreads" access="public" returntype="array" output="false">
 		<cfreturn variables.instance.Threads />
 	</cffunction>
+	<cffunction name="getThreadCount" access="public" returntype="string" output="false">
+		<cfreturn arrayLen(getThreads()) />
+	</cffunction>
+
 
 	<cffunction name="setLastPost" access="public" returntype="void" output="false">
 		<cfargument name="LastPost" type="any" required="true" />

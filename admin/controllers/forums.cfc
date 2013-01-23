@@ -24,6 +24,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 
 		<cfset  actionCheck( arguments.rc )>
+
+		<cfset rc.configurationService	= getBeanFactory().getBean("configurationService") />
+		<cfset rc.conferenceService		= getBeanFactory().getBean("conferenceService") />
+
+		<cfset var forumService			= getBeanFactory().getBean("forumService") />
+		<cfset rc.getForums				= forumService.getForums(siteid = rc.siteID) />
+		
 	</cffunction>
 
 	<cffunction name="edit" access="public" returntype="void" output="false">
@@ -76,7 +83,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 			<cfset arguments.rc.conferenceID = forumBean.getConferenceID()>
 		<cfelse>
 			<cfset sPresets.isActive		= 1 />
-			<cfif StructKeyExists(rc,"conferenceID")>
+			<cfif structKeyExists(rc,"conferenceID") and len(trim(rc.conferenceID))>
 				<cfset sPresets.conferenceID	= rc.conferenceID />
 			</cfif>
 			<cfset forumBean 				= forumService.createForum() />

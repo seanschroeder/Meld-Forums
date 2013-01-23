@@ -1,14 +1,16 @@
 <cfimport prefix="ui" taglib="../../ui" />
 <cfoutput>
 
-
+<!--------------------------------------------------------------------------------------------
+	PAGE BUTTONS / CONTROLS 
+--------------------------------------------------------------------------------------------->
 <div class="row">
 	<div class="span12">
 
 		<a href="#buildURL('admin:conferences.edit')#" title="#rc.mmRBF.key('addnewconference','tip')#" class="btn pull-right"><i class="icon-plus-sign"></i> #rc.mmRBF.key('addnewconference')#</a>
 
 		<div class="input-append">
-			<input id="search-input" name="search" type="text" placeholder="Search for Conference">
+			<input id="search-input" name="search" type="text" placeholder="#rc.mmRBF.key('searchforconference')#">
 		</div>
 		
 	</div>
@@ -16,9 +18,9 @@
 
 <br/>
 
-<!--- <cfdump var="#rc.getConferences#" /> --->
-
-<!--- begin content --->
+<!--------------------------------------------------------------------------------------------
+	MAIN CONTENT: TABLE
+--------------------------------------------------------------------------------------------->
 <div class="row">
 	<div class="span12">
 		<table id="conferenceTable" class="table table-striped table-condensed table-bordered mura-table-grid clickable">
@@ -60,10 +62,12 @@
 
 		</table>
 
-    </div>
+	</div>
 </div>
 
-<!--- page specific JS --->
+<!--------------------------------------------------------------------------------------------
+	PAGE SPECIFIC JAVASCRIPT
+--------------------------------------------------------------------------------------------->
 <ui:javascript>
 $(function(){
 
