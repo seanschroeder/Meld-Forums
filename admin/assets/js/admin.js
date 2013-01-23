@@ -28,4 +28,10 @@ $(function(){
 		$(location).attr('href',$(this).attr('href'));
 	});
 
+	$('input.radio-tab[type="radio"]').change(function() {
+		$('.radio-tab-content').children().hide();
+		$('.radio-tab-content').find('.' + $('input.radio-tab[type="radio"]:checked').attr('id')).show();
+	});
+	$('input.radio-tab[type="radio"]').change();
+
 });

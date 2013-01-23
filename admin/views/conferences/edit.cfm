@@ -4,9 +4,9 @@
 
 <!--- update --->
 <cfif rc.conferenceBean.getBeanExists()>
-	<form action="#buildURL('admin:conferences.edit')#" method="post">	
+	<form action="#buildURL('admin:conferences.edit?btaction=update')#" method="post">	
 <cfelse><!--- save --->
-	<form action="#buildURL('admin:conferences.edit')#" method="post">	
+	<form action="#buildURL('admin:conferences.edit?btaction=save')#" method="post">	
 </cfif>
 	
 	<input type="hidden" name="conferenceID" value="#rc.conferenceBean.getConferenceID()#">
@@ -61,36 +61,106 @@
 				<span id="extendset-container-tabbasictop" class="extendset-container"></span>
 
 				<div class="fieldset">
-		
 
-<!--- <div id="msTabs-Options">
-		<h3>#rc.mmRBF.key('options')#</h3>
-		<ul class="form">
-			<li class="first">
-				<label for="conferencebean_orderno">#rc.mmRBF.key('orderno')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('orderno','tip')#</span>&nbsp;</a></label>
-				<input class="text tiny" type="text" name="conferencebean_orderno" id="conferencebean_orderno" value="#form.conferencebean_orderno#" size="30" maxlength="100" data-required="true" data-validate="string" data-message="#rc.mmRBF.key('conferencename','validation')#" />
-			</li>
-			<li class="checkbox padded">
-				<input class="checkbox" type="checkbox" name="conferencebean_isactive" id="conferencebean_isactive" value="1" <cfif form.conferencebean_isactive>CHECKED</cfif>/>
-				<label for="conferencebean_isactive">#rc.mmRBF.key('isactive')#<a href="##" class="tooltip"><span>#rc.mmRBF.key('isactive','tip')#</span>&nbsp;</a></label>
-			</li>
-		</ul>
-	</div> --->
+					<!--- active --->
+					<ui:Checkbox key="isactive" 		name="conferencebean_isactive" />
+
+					<!--- permissions --->
+					<div class="control-group">
+
+						<div class="span2">
+
+							<label class="control-label">
+								<a href="##" rel="tooltip" title="#request.context.mmRBF.key('configuration','tip')#">#request.context.mmRBF.key('configuration')# <i class="icon-question-sign"></i></a>
+							</label>
+													
+							<div class="controls">
+								<!--- inherit --->
+								<label for="conferencebean_configurationid" class="radio"><input name="conferencebean_configurationid" id="conferencebean_configurationid" type="radio" value="" class="radio radio-tab" 
+									<cfif !len(trim(form.conferencebean_configurationid))>checked</cfif>
+									> #rc.mmRBF.key('inherit')#</label>
+								<!--- other choices --->
+								<cfloop from="1" to="#arrayLen(rc.aConfiguration)#" index="local.iiX">
+									<label for="conferencebean_configurationid#rc.aConfiguration[local.iiX].getConfigurationID()#" class="radio"><input name="conferencebean_configurationid" id="conferencebean_configurationid#rc.aConfiguration[local.iiX].getConfigurationID()#" type="radio" value="#rc.aConfiguration[local.iiX].getConfigurationID()#" class="radio radio-tab" 
+									<cfif listFindNoCase(form.conferencebean_configurationid, rc.aConfiguration[local.iiX].getConfigurationID())>checked</cfif>
+									> #rc.aConfiguration[local.iiX].getName()#</label>
+								</cfloop>
+							</div>
+							
+						</div><!--- /span2 --->
+						
+						<div class="span1">&nbsp;</div>
+
+						<!--- permission display --->
+						<div class="span9 radio-tab-content">
+
+							<div class="conferencebean_configurationid">
+								<h2>#rc.mmRBF.key('selectedconfiguration')#: #rc.mmRBF.key('inherit')#</h2>
+							</div>
+
+							<cfloop from="1" to="#arrayLen(rc.aConfiguration)#" index="local.iiX">
+								<cfset config = rc.aConfiguration[local.iiX] />
+								<div class="conferencebean_configurationid#config.getConfigurationID()#">
+									<h2>#rc.mmRBF.key('selectedconfiguration')#: #config.getName()#</h2>
 
 
+									<table class="table table-striped table-condensed table-bordered mura-table-grid">
 
+										<thead>
+										<tr> 
+											<th class="var-width">#rc.mmRBF.key('globalconfiguration')#</th>
+											<th>#rc.mmRBF.key('RestrictReadGroups')#</th>
+											<th>#rc.mmRBF.key('RestrictContributeGroups')#</th>
+											<th>#rc.mmRBF.key('RestrictModerateGroups')#</th>
+										</tr>
+										</thead>
+
+										<tbody>
+
+
+										<cfif rc.qGroupsPublic.recordcount>
+						
+							<!--- 
+							<cfloop query="rc.qGroupsPublic">
+														<option value="#groupname#" <cfif listfind(form.configurationbean_RestrictModerateGroups,groupname)>selected</cfif>>#groupname#</option>
+														</cfloop> --->
+							
+											<tr> 
+												<th class="var-width">#rc.mmRBF.key('membergroups')#</th>
+												<th>#rc.mmRBF.key('RestrictReadGroups')#</th>
+												<th>#rc.mmRBF.key('RestrictContributeGroups')#</th>
+												<th>#rc.mmRBF.key('RestrictModerateGroups')#</th>
+											</tr>
+											<cfloop query="rc.qGroupsPublic">
+												<tr>
+													<td class="var-width">#rc.qGroupsPublic.groupname#</td>
+													<td><i class="icon-ok"></i></td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+											</cfloop>
+										</cfif>
+
+										<tr>
+											<td class="var-width" colspan="4">#rc.mmRBF.key('admingroups')#</td>
+										</tr>
+										</tbody>
+
+									</table>
+								</div>
+							</cfloop>
+
+						</div><!--- /span3 --->
+
+					</div><!--- /permissions row --->					
 	
 				</div><!--- /fieldset ---> 
 		
 				<div class="load-inline tab-preloader"></div>
 		
 				<div class="form-actions">
-				
-					 <button type="button" class="btn" onclick="if(siteManager.ckContent(draftremovalnotice)){submitForm(document.contentForm,'add');}"><i class="icon-check"></i> Save Draft</button>
-					
-					<button type="button" class="btn" onclick="document.contentForm.approved.value=1;if(siteManager.ckContent(draftremovalnotice)){submitForm(document.contentForm,'add');}"><i class="icon-check"></i> Publish</button>
-					<input name="btaction" type="submit" class="btn" value="save" />
-					 
+					<a href="#buildURL('admin:conferences.default')#" class="btn"><i class="icon-remove"></i> Cancel</a>
+					<button type="submit" class="btn" ><i class="icon-check"></i> save</button>
 				</div><!--- /form-actions --->
 
 			</div><!--- /tabbasic --->
@@ -100,6 +170,7 @@
 	</div><!--- /tabbable --->
 
 </form>
+<cfdump var="#rc.aConfiguration#" />
 </cfoutput>
 
 
@@ -142,4 +213,3 @@
 </form>
 <!--- end content --->
 </cfoutput> 
-

@@ -1,23 +1,33 @@
+<!--- 
 <cfsilent>
-	
 	<!--- rc --->
 	<!--- headers --->
 	<cfinclude template="headers/jquery-datatable-conference.cfm">
-</cfsilent><cfoutput>
+</cfsilent> --->
+<cfimport prefix="ui" taglib="../../ui" />
+<cfoutput>
 
 
 <div class="row">
 	<div class="span12">
+
 		<a href="#buildURL('admin:conferences.edit')#" title="#rc.mmRBF.key('addnewconference','tip')#" class="btn pull-right"><i class="icon-plus-sign"></i> #rc.mmRBF.key('addnewconference')#</a>
+
+		<div class="input-append">
+			<input id="search-input" name="search" type="text" placeholder="Search for Conference">
+		</div>
+		
 	</div>
 </div>
 
 <br/>
 
+<!--- <cfdump var="#rc.getConferences#" /> --->
+
 <!--- begin content --->
 <div class="row">
 	<div class="span12">
-		<table class="table table-striped table-condensed table-bordered mura-table-grid clickable">
+		<table id="conferenceTable" class="table table-striped table-condensed table-bordered mura-table-grid clickable">
 
 		<thead>
 		<tr> 
@@ -25,6 +35,7 @@
 			<th><a href="">#rc.mmRBF.key('forumcount')#</a></th>
 			<th><a href="">#rc.mmRBF.key('threadcount')#</a></th>
 			<th>#rc.mmRBF.key('status')#</th>
+			<th>#rc.mmRBF.key('configuration')#</th>
 			<th class="actions">&nbsp;</th>
 		</tr>
 		</thead>
@@ -32,47 +43,21 @@
 		<tbody>
 		<cfif !arrayLen(rc.getConferences)>
 			<tr>
-				<td colspan="5" class="noResults">#rc.mmRBF.key('emptyconferences')#</td>
+				<td colspan="6" class="noResults">#rc.mmRBF.key('emptyconferences')#</td>
 			</tr>
 		<cfelse>
 			<cfloop array="#rc.getConferences#" index="c">
 				<!--- TODO: consider an itterator here --->
 				<tr>
-					<td class="var-width" href="#buildURL('admin:forums.list?conferenceid=#c.getConferenceID()#')#">#c.getName()#</td>
+					<td class="var-width" href="#buildURL('admin:conferences.edit?conferenceid=#c.getConferenceID()#')#">#c.getName()#</td>
 					<td>#c.getForumCount()#</td>
 					<td>#c.getThreadCount()#</td>
 					<td><cfif c.getIsActive() >#rc.mmRBF.key('active1')#<cfelse>#rc.mmRBF.key('active1')#</cfif></td>
+					<td><cfif len(trim(c.getConfigurationID()))>#rc.configurationService.getConfiguration(c.getConfigurationID()).getName()#<cfelse>#rc.mmRBF.key('inherit')#</cfif></td><!--- TODO: this is poor form, move helper for this to the conference bean? --->
 					<td>
 						<a href="#buildURL('admin:conferences.edit?conferenceid=#c.getConferenceID()#')#"><i class="icon-pencil"></i></a>
-						<a href="#buildURL('admin:conferences.permissions?conferenceid=#c.getConferenceID()#')#"><i class="icon-group"></i></a>
+						<!--- <a href="#buildURL('admin:conferences.permissions?conferenceid=#c.getConferenceID()#')#"><i class="icon-group"></i></a> --->
 						<a href="#buildURL('admin:conferences.delete?conferenceid=#c.getConferenceID()#')#"><i class="icon-remove-sign"></i></a>
-
-<!--- mura's edit actions icon set
-<ul class="#lcase(rc.rstop.type)#">
-				<cfif verdict neq 'none'>
-				<li class="edit">
-					<a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit')#" class="draftprompt" data-siteid="#rc.siteid#" data-contentid="#rc.rstop.contentid#" data-contenthistid="#rc.rstop.contenthistid#"title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.edit')#" href="index.cfm?muraAction=cArch.edit&contenthistid=#rc.rstop.ContentHistID#&contentid=#rc.rstop.ContentID#&type=#rc.rstop.type#&parentid=#rc.rstop.parentID#&topid=#URLEncodedFormat(rc.topid)#&siteid=#URLEncodedFormat(rc.siteid)#&moduleid=#rc.moduleid#"><i class="icon-pencil"></i></a></li>
-					<li class="version-history"><a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.versionhistory')#" href="index.cfm?muraAction=cArch.hist&contentid=#rc.rstop.ContentID#&type=#rc.rstop.type#&parentid=#rc.rstop.parentID#&topid=#URLEncodedFormat(rc.topid)#&siteid=#URLEncodedFormat(rc.siteid)#&moduleid=#rc.moduleid#"><i class="icon-book"></i></a></li>
-					<cfif rc.moduleid eq '00000000000000000000000000000000004'>
-						<li class="manage-data"><a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.managedata')#" href="index.cfm?muraAction=cArch.datamanager&contentid=#rc.rstop.ContentID#&siteid=#URLEncodedFormat(rc.siteid)#&moduleid=#rc.moduleid#&contenthistid=#rc.rstop.ContentHistID#&topid=#URLEncodedFormat(rc.topid)#&parentid=#URLEncodedFormat(rc.parentid)#&type=Form"><i class="icon-wrench"></i></a></li>
-					</cfif>
-					<cfif listFind(session.mura.memberships,'Admin;#application.settingsManager.getSite(rc.siteid).getPrivateUserPoolID()#;0') or listFind(session.mura.memberships,'S2')>
-						<li class="permissions"><a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.permissions')#" href="index.cfm?muraAction=cPerm.main&contentid=#rc.rstop.ContentID#&type=#rc.rstop.type#&parentid=#rc.rstop.parentID#&topid=#URLEncodedFormat(rc.topid)#&siteid=#URLEncodedFormat(rc.siteid)#&moduleid=#rc.moduleid#&startrow=#rc.startrow#"><i class="icon-group"></i></a></li>
-					</cfif>
-				<cfelse>
-					<li class="edit disabled"><a><i class="icon-pencil"></i></a></li>
-					<li class="version-history disabled"><i class="icon-book"></i></li>
-					<cfif rc.moduleid eq '00000000000000000000000000000000004'>
-						<li class="manage-dataOff disabled"><i class="icon-wrench"></i></li>
-					</cfif>
-					<li class="permissions disabled"><a><i class="icon-group"></i></a></li>
-				</cfif>
-				<cfif ((rc.locking neq 'all') or (rc.parentid eq '#rc.topid#' and rc.locking eq 'none')) and (verdict eq 'editor') and not rc.rsTop.isLocked eq 1>
-					<li class="delete"><a title="#application.rbFactory.getKeyValue(session.rb,'sitemanager.content.delete')#" href="index.cfm?muraAction=cArch.update&contentid=#rc.rstop.ContentID#&type=#rc.rstop.type#&action=deleteall&topid=#URLEncodedFormat(rc.topid)#&siteid=#URLEncodedFormat(rc.siteid)#&moduleid=#rc.moduleid#&parentid=#URLEncodedFormat(rc.parentid)#" onClick="return confirmDialog('#jsStringFormat(application.rbFactory.getKeyValue(session.rb,'sitemanager.content.deletecontentconfirm'))#',this.href)"><i class="icon-remove-sign"></i></a></li>
-				<cfelseif rc.locking neq 'all'>
-					<li class="delete disabled"><i class="icon-remove-sign"></i></li>
-				</cfif>
-			</ul> --->
 					</td>
 				</tr>
 			</cfloop>
@@ -84,9 +69,28 @@
     </div>
 </div>
 
+<!--- page specific JS --->
+<ui:javascript>
+$(function(){
+
+	$('##search-input').focus();
+
+	var oTable = $('##conferenceTable').dataTable({
+		'sDom':'t', <!--- only show the table, not other controls --->
+		'bLengthChange': false, <!---user cannot change length--->
+		'iDisplayLength': #arrayLen(rc.getConferences)# <!--- include all items --->
+	});
+
+	$('##search-input').keyup( function (e) {
+		oTable.fnFilter( $(this).val() );
+	});
+
+});
+</ui:javascript>
+
+
 
 <!--- <cfdump var="#rc.getConferences#" /> --->
-
 
 <!--- original meld AOP code to generate table
 <ul class='table-buttons three'>

@@ -23,8 +23,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 	<cffunction name="default" access="public" returntype="void" output="false">
 		<cfargument name="rc" type="struct" required="false" default="#StructNew()#">
 
-		<cfset var configurationService	= getBeanFactory().getBean("configurationService") />
-		<cfset configurationService.verifyBaseConfiguration( rc.siteID ) />
+		<cfset rc.configurationService	= getBeanFactory().getBean("configurationService") />
+		<cfset rc.configurationService.verifyBaseConfiguration( rc.siteID ) />
 
 		<cfset var conferenceService	= getBeanFactory().getBean("conferenceService") />
 		<cfset rc.getConferences		= conferenceService.getConferences(siteid = rc.siteID) />
@@ -41,10 +41,13 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfset var mmFormTools			= getBeanFactory().getBean("mmFormTools") />
 		<cfset var conferenceBean		= "" />
 		<cfset var newConferenceBean	= "" />
-		<cfset var aConfiguration		= ArrayNew(1)>
+		<cfset var aConfiguration		= arrayNew(1)>
 
-		<cfset var sPresets			= StructNew() />
-		<cfset var sArgs			= StructNew() />
+		<cfset var sPresets				= structNew() />
+		<cfset var sArgs				= structNew() />
+
+		<cfset rc.qGroupsPublic			= rc.$.getBean("userManager").getPublicGroups( session.siteID ) />
+		<cfset rc.qGroupsPrivate		= rc.$.getBean("userManager").getPrivateGroups( session.siteID ) />
 
 		<cfset rc.mmBC.addCrumb( rc,rc.mmRBF.key('conferences'),"?action=conferences" )>
 
@@ -52,24 +55,24 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfif isDefined("rc.btaction")>
 			<!--- cancel? --->
 			<cfif arguments.rc.btaction eq 'cancel'>
-				<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
+				<cfset variables.fw.redirect('admin:conferences.default') />
 			<!--- save? --->
 			<cfelseif rc.btaction eq 'save'>
 				<cfset success = actionSaveConference( arguments.rc )>
 				<cfif success eq true>
-					<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
+					<cfset variables.fw.redirect('admin:conferences.default') />
 				</cfif> 
 			<!--- update? --->
 			<cfelseif rc.btaction eq 'update'>
 				<cfset success = actionUpdateConference( arguments.rc )>
 				<cfif success eq true>
-					<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
+					<cfset variables.fw.redirect('admin:conferences.default') />
 				</cfif>
 			</cfif>
 		<cfelseif isDefined("rc.btdeleteconfirm") and rc.btdeleteconfirm eq "delete">
 			<cfset success = actionDeleteConference( arguments.rc )>
 			<cfif success eq true>
-				<cflocation url="#buildURL('admin:conferences.default')#" addtoken="false" />
+				<cfset variables.fw.redirect('admin:conferences.default') />
 			</cfif> 
 		</cfif>
 
