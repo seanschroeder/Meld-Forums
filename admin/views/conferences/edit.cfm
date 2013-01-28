@@ -10,15 +10,13 @@
 	
 	<input type="hidden" name="conferenceID" value="#rc.conferenceBean.getConferenceID()#">
 			
-	<span id="msg">
-	
-	</span>
+	<span id="msg"></span>
 		
 	<div class="tabbable tabs-left">
 
 		<ul class="nav nav-tabs tabs initActiveTab">
 			<li><a href="##tabBasic" data-toggle="tab"><span>#rc.mmRBF.key('general')#</span></a></li>
-			<li><a href="##tabTags" data-toggle="tab"><span>#rc.mmRBF.key('options')#</span></a></li>
+			<li><a href="##tabOptions" data-toggle="tab"><span>#rc.mmRBF.key('options')#</span></a></li>
 		</ul><!--- /nav-tabs --->
 
 		<div class="tab-content row-fluid">
@@ -39,8 +37,9 @@
 					<ui:TextInput key="friendlyname" 	name="conferencebean_friendlyname" />
 
 					<!--- description --->
-					<ui:TextInput key="description" 	name="conferencebean_description" />
-	
+					<ui:TextArea key="description" 	name="conferencebean_description" />
+
+
 				</div><!--- /fieldset ---> 
 		
 				<div class="load-inline tab-preloader"></div>
@@ -55,7 +54,7 @@
 			</div><!--- /tabbasic --->
 
 			
-			<div id="tabTags" class="tab-pane">
+			<div id="tabOptions" class="tab-pane">
 	
 				<span id="extendset-container-tabbasictop" class="extendset-container"></span>
 
@@ -105,16 +104,28 @@
 
 									<table class="table table-striped table-condensed table-bordered mura-table-grid">
 
-										<thead>
-										<tr> 
-											<th class="var-width">#rc.mmRBF.key('globalconfiguration')#</th>
-											<th>#rc.mmRBF.key('RestrictReadGroups')#</th>
-											<th>#rc.mmRBF.key('RestrictContributeGroups')#</th>
-											<th>#rc.mmRBF.key('RestrictModerateGroups')#</th>
-										</tr>
-										</thead>
-
+										
 										<tbody>
+										
+										<cfif rc.qGroupsPrivate.recordcount>
+
+											<tr> 
+												<th class="var-width">#rc.mmRBF.key('globalconfiguration')#</th>
+												<th>#rc.mmRBF.key('AllowRead')#</th>
+												<th>#rc.mmRBF.key('AllowContribute')#</th>
+												<th>#rc.mmRBF.key('AllowModerate')#</th>
+											</tr>
+											<cfloop query="rc.qGroupsPrivate">
+												<tr>
+													<td class="var-width">#rc.qGroupsPrivate.groupname#</td>
+													<td><i class="icon-ok"></i></td>
+													<td>&nbsp;</td>
+													<td>&nbsp;</td>
+												</tr>
+											</cfloop>
+										
+
+										</cfif>
 
 
 										<cfif rc.qGroupsPublic.recordcount>
@@ -126,9 +137,9 @@
 							
 											<tr> 
 												<th class="var-width">#rc.mmRBF.key('membergroups')#</th>
-												<th>#rc.mmRBF.key('RestrictReadGroups')#</th>
-												<th>#rc.mmRBF.key('RestrictContributeGroups')#</th>
-												<th>#rc.mmRBF.key('RestrictModerateGroups')#</th>
+												<th>#rc.mmRBF.key('AllowRead')#</th>
+												<th>#rc.mmRBF.key('AllowContribute')#</th>
+												<th>#rc.mmRBF.key('AllowModerate')#</th>
 											</tr>
 											<cfloop query="rc.qGroupsPublic">
 												<tr>
@@ -143,6 +154,7 @@
 										<tr>
 											<td class="var-width" colspan="4">#rc.mmRBF.key('admingroups')#</td>
 										</tr>
+
 										</tbody>
 
 									</table>

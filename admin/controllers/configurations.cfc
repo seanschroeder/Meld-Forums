@@ -4,6 +4,9 @@
 
 		<cfset var configurationService	= getBeanFactory().getBean("configurationService") />
 		<cfset configurationService.verifyBaseConfiguration( rc.siteID ) />
+
+		<cfset var configurationService		= getBeanFactory().getBean("configurationService") />
+		<cfset rc.getConfigurations			= configurationService.getConfigurations( siteID=rc.siteID ) />
 	
 	</cffunction>
 

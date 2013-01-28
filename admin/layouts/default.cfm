@@ -60,7 +60,8 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 				<li <cfif findNoCase('main',rc.action)>class="active"</cfif>><a href="#buildURL('admin:main.default')#">#rc.mmRBF.key('dashboard')#</a></li>
 				<li <cfif findNoCase('admin:conferences',rc.action)>class="active"</cfif>><a href="#buildURL('admin:conferences')#">#rc.mmRBF.key('conferences')#</a></li>
 				<li <cfif findNoCase('admin:forums',rc.action)>class="active"</cfif>><a href="#buildURL('admin:forums')#">#rc.mmRBF.key('forums')#</a></li>
-				<li <cfif findNoCase('admin:users',rc.action)>class="active"</cfif>><a href="#buildURL('admin:users')#">#rc.mmRBF.key('users')#</a></li>
+				<!--- <li <cfif findNoCase('admin:users',rc.action)>class="active"</cfif>><a href="#buildURL('admin:users')#">#rc.mmRBF.key('users')#</a></li> --->
+				<li <cfif findNoCase('admin:configurations',rc.action)>class="active"</cfif>><a href="#buildURL('admin:configurations')#">#rc.mmRBF.key('configurations')#</a></li>
 				<li class="dropdown pull-right<cfif findNoCase('admin:about',rc.action)> active</cfif>">
 			   	 	<a class="dropdown-toggle"
 			    	   	data-toggle="dropdown"
@@ -72,18 +73,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 						<li><a href="#buildURL('admin:about.license')#">#rc.mmRBF.key('license')#</a></li>
 				    </ul>
 				</li>
-				<li class="dropdown pull-right<cfif findNoCase('admin:settings',rc.action) or findNoCase('admin:configurations',rc.action)> active</cfif>">
-				    <a class="dropdown-toggle"
-				       data-toggle="dropdown"
-				       title="#rc.mmRBF.key('settings')#" href="##">
-				        #rc.mmRBF.key('settings')#
-				        <b class="caret"></b>
-				    </a>
-				    <ul class="dropdown-menu">
-				     	<li><a href="#buildURL('admin:settings')#">#rc.mmRBF.key('settings')#</a></li>
-						<li><a href="#buildURL('admin:configurations')#">#rc.mmRBF.key('configurations')#</a></li>
-				    </ul>
-			  	</li>
+				<li class="pull-right<cfif findNoCase('admin:settings',rc.action)> active</cfif>"><a href="#buildURL('admin:settings')#">#rc.mmRBF.key('settings')#</a></li>
 			</ul>
 		</div>
 	</div>
