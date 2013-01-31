@@ -37,7 +37,7 @@
 					<ui:TextInput key="friendlyname" 	name="conferencebean_friendlyname" />
 
 					<!--- description --->
-					<ui:TextArea key="description" 	name="conferencebean_description" />
+					<ui:TextArea key="description" 		name="conferencebean_description" />
 
 
 				</div><!--- /fieldset ---> 
@@ -101,9 +101,7 @@
 								<div class="conferencebean_configurationid#config.getConfigurationID()#">
 									<h2>#rc.mmRBF.key('selectedconfiguration')#: #config.getName()#</h2>
 
-
 									<table class="table table-striped table-condensed table-bordered mura-table-grid">
-
 										
 										<tbody>
 										

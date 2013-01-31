@@ -820,7 +820,7 @@ Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
 		<cfargument name="permType" type="string" required="false" default="read" />
 
 		<cfset var sArgs	= StructNew() />
-		<cfset sArgs.$					= variables.$ />
+		<cfset sArgs.$		= variables.$ />
 
 		<cfif StructKeyExists( arguments,"configurationID" ) and len( arguments.configurationID )>
 			<cfset sArgs.configurationID	= arguments.configurationID />

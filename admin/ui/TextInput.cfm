@@ -1,6 +1,10 @@
 <!--- default params --->
-<cfparam name="attributes.key" 	default="" /><!--- key for resource bundles --->
-<cfparam name="attributes.name" default="" />
+<cfparam name="attributes.key" 			default="" /><!--- resource bundle key for the title label --->
+<cfparam name="attributes.helptext" 	default="" /><!--- resource bundle key for the inline help text, shown beside label --->
+<cfparam name="attributes.name" 		default="" />
+<cfparam name="attributes.required" 	default="false" />
+<cfparam name="attributes.validate"	 	default="" />
+<cfparam name="attributes.classlist" 	default="span12" />
 
 <cfif thisTag.executionMode eq 'start'>
 
@@ -12,10 +16,15 @@
 			<cfelse>
 				#request.context.mmRBF.key(attributes.key)#
 			</cfif>
+			<cfif len(trim(attributes.helptext))>
+				<span class="help-inline">(#attributes.helptext#)</span>	
+			</cfif>
 		</label>
 		<div class="controls">
-			<input type="text" id="#attributes.name#" name="#attributes.name#" value="#form[attributes.name]#"  maxlength="255" class="span12" data-required="true" data-validate="string" 
+			<input type="text" id="#attributes.name#" name="#attributes.name#" value="#form[attributes.name]#"  maxlength="255" class="#attributes.classlist#"
 			<cfif request.context.mmRBF.keyExists('#attributes.key#','validation')>data-message="#request.context.mmRBF.key(attributes.key,'validation')#"</cfif>
+			<cfif attributes.required >data-required="true"</cfif>
+			<cfif len(trim(attributes.validate)) >data-validate="#attributes.validate#"</cfif>
 			/>
 		</div>
 	</div>

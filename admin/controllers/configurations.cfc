@@ -23,8 +23,8 @@
 		<cfset var newConfigurationBean	= "" />
 		<cfset var aConfiguration		= ArrayNew(1)>
 
-		<cfset var qGroupsPublic		= rc.$.getBean("userManager").getPublicGroups( session.siteID ) />
-		<cfset var qGroupsPrivate		= rc.$.getBean("userManager").getPrivateGroups( session.siteID ) />
+		<cfset var qGroupsPublic			= rc.$.getBean("userManager").getPublicGroups( session.siteID ) />
+		<cfset var qGroupsPrivate			= rc.$.getBean("userManager").getPrivateGroups( session.siteID ) />
 
 		<cfset var sPresets			= StructNew() />
 		<cfset var sArgs			= StructNew() />
